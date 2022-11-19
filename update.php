@@ -39,6 +39,14 @@ try {
 		$post_course_enrolled = isset($data->course_enrolled) ? $data->course_enrolled : $row['course_enrolled'];
 		$post_is_leader = isset($data->is_leader) ? $data->is_leader : $row['is_leader'];
 
+
+		if($post_is_leader =='1'){
+			$post_leadership_role = "Student leader";
+		}
+		else{
+			$post_leadership_role = "Not a student leader";
+		}
+
 		$update_query = "UPDATE `students` SET name = :name, course_enrolled = :course_enrolled, is_leader = :is_leader 
         WHERE id = :id";
 
@@ -46,7 +54,7 @@ try {
 
 		$update_stmt->bindValue(':name', htmlspecialchars(strip_tags($post_name)), PDO::PARAM_STR);
 		$update_stmt->bindValue(':course_enrolled', htmlspecialchars(strip_tags($post_course_enrolled)), PDO::PARAM_STR);
-		$update_stmt->bindValue(':is_leader', htmlspecialchars(strip_tags($post_is_leader)), PDO::PARAM_INT);
+		$update_stmt->bindValue(':is_leader', htmlspecialchars(strip_tags($post_leadership_role)), PDO::PARAM_STR);
 		$update_stmt->bindValue(':id', $data->id, PDO::PARAM_INT);
 
 

@@ -45,13 +45,20 @@ try {
 	$course_enrolled = htmlspecialchars(trim($data->course_enrolled));
 	$is_leader = htmlspecialchars(trim($data->is_leader));
 
+	if($is_leader =='1'){
+				$leadership_role="Student leader";
+			}
+			else{
+				$leadership_role="Not a student leader";
+			}
+
 	$query = "INSERT INTO `students`(name,course_enrolled,is_leader) VALUES(:name,:course_enrolled,:is_leader)";
 
 	$stmt = $conn->prepare($query);
 
 	$stmt->bindValue(':name', $name, PDO::PARAM_STR);
 	$stmt->bindValue(':course_enrolled', $course_enrolled, PDO::PARAM_STR);
-	$stmt->bindValue(':is_leader', $is_leader, PDO::PARAM_STR);
+	$stmt->bindValue(':is_leader', $leadership_role, PDO::PARAM_STR);
 
 	if ($stmt->execute()) {
 

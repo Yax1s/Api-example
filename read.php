@@ -28,6 +28,7 @@ if (isset($_GET['id'])) {
 	]);
 }
 
+
 try {
 
 	$sql = is_numeric($post_id) ? "SELECT * FROM `students` WHERE id='$post_id'" : "SELECT * FROM `students`";
@@ -44,31 +45,12 @@ try {
 			$data = $stmt->fetch(PDO::FETCH_ASSOC);
 		} else {
 			$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-			$student_name=$data['name'];
-			$course_enrolled=$data['course_enrolled'];
-			$leadership=$data['is_leader'];
-			if($leadership=='1'){
-				$leadership_role="Student Leader";
-			}
-			else{
-				$leadership_role="Not a student Leader";
-			}
-			response($student_name,$course_enrolled,$leadership_role);
 		}
 
-		function response($student_name,$course_enrolled,$leadership): void
-		{
-			$response['Student_Name']=$student_name;
-			$response['Course_Enrolled']=$course_enrolled;
-			$response['Leadership_Status']=$leadership;
-
-		//	$json_response=json_encode($response);
-		//	echo($json_response);
-			echo json_encode([
-				'success' => 1,
-				'data' => $response,
-			]);
-		}
+		echo json_encode([
+			'success' => 1,
+			'data' => $data,
+		]);
 
 	else :
 		echo json_encode([
@@ -76,6 +58,7 @@ try {
 			'message' => 'No Result Found!',
 		]);
 	endif;
+
 } catch (PDOException $e) {
 	http_response_code(500);
 	echo json_encode([
@@ -84,3 +67,17 @@ try {
 	]);
 	exit;
 }
+
+//function response($student_name,$course_enrolled,$leadership)
+//{
+//	$response['Student_Name']=$student_name;
+//	$response['Course_Enrolled']=$course_enrolled;
+//	$response['Leadership_Status']=$leadership;
+//
+//	//	$json_response=json_encode($response);
+//	//	echo($json_response);
+//	echo json_encode([
+//		'success' => 1,
+//		'data' => $response,
+//	]);
+//}
