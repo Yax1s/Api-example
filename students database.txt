@@ -1,0 +1,8 @@
+create table students
+(
+    id              integer unsigned null,
+    name            varchar(255)     null,
+    course_enrolled text             null,
+    created_at      datetime         null,
+    is_leader       varchar(255)     null
+);
