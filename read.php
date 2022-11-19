@@ -44,12 +44,31 @@ try {
 			$data = $stmt->fetch(PDO::FETCH_ASSOC);
 		} else {
 			$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			$student_name=$data['name'];
+			$course_enrolled=$data['course_enrolled'];
+			$leadership=$data['is_leader'];
+			if($leadership=='1'){
+				$leadership_role="Student Leader";
+			}
+			else{
+				$leadership_role="Not a student Leader";
+			}
+			response($student_name,$course_enrolled,$leadership_role);
 		}
 
-		echo json_encode([
-			'success' => 1,
-			'data' => $data,
-		]);
+		function response($student_name,$course_enrolled,$leadership): void
+		{
+			$response['Student_Name']=$student_name;
+			$response['Course_Enrolled']=$course_enrolled;
+			$response['Leadership_Status']=$leadership;
+
+		//	$json_response=json_encode($response);
+		//	echo($json_response);
+			echo json_encode([
+				'success' => 1,
+				'data' => $response,
+			]);
+		}
 
 	else :
 		echo json_encode([
